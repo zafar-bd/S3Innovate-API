@@ -37,10 +37,13 @@ namespace S3Inovate.Core.Servies.Implementations
                        .ProjectTo<ReadingVm>(_mapper.ConfigurationProvider)
                        .ToListAsync();
 
+            if (!requiredReadings.Any())
+                return new List<ReadingVm>();
+
             var lastRow = await query
-                .OrderByDescending(r => r.Timestamp)
-                .ProjectTo<ReadingVm>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync();
+            .OrderByDescending(r => r.Timestamp)
+            .ProjectTo<ReadingVm>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
 
             var requiredLastReadingsRow = requiredReadings.LastOrDefault();
 
