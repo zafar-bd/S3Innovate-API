@@ -23,16 +23,34 @@ namespace S3Inovate.Core.Servies.Implementations
         }
 
         public async Task<IReadOnlyCollection<ReadingVm>> GetReadingsAsync(ReadingQuery args)
-        => await
-            _dbContext
-            .Readings
-            .Where(r => r.BuildingId == args.BuildingId
-                     && r.ObjectId == args.ObjectId
-                     && r.DataFieldId == args.DataFieldId
-                     && r.Timestamp >= args.FromDate
-                     && r.Timestamp <= args.ToDate)
-            .OrderBy(b => b.Timestamp)
-            .ProjectTo<ReadingVm>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+        {
+            var query = _dbContext
+                       .Readings
+                       .Where(r => r.BuildingId == args.BuildingId
+                                && r.ObjectId == args.ObjectId
+                                && r.DataFieldId == args.DataFieldId);
+
+            var requiredReadings = await query
+                       .Where(r => r.Timestamp >= args.FromDate
+                                && r.Timestamp <= args.ToDate)
+                       .OrderBy(b => b.Timestamp)
+                       .ProjectTo<ReadingVm>(_mapper.ConfigurationProvider)
+                       .ToListAsync();
+
+            var lastRow = await query
+                .OrderByDescending(r => r.Timestamp)
+                .ProjectTo<ReadingVm>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
+
+            var requiredLastReadingsRow = requiredReadings.LastOrDefault();
+
+            if (!(lastRow.Timestamp == requiredLastReadingsRow.Timestamp
+               && lastRow.Value == requiredLastReadingsRow.Value))
+            {
+                requiredReadings.Add(lastRow);
+            }
+
+            return requiredReadings;
+        }
     }
 }

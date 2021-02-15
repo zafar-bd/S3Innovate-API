@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using S3Inovate.Core.Models;
 using S3Inovate.Core.ViewModels;
+using S3Inovate.Core.Helpers;
 
 namespace S3Inovate.WebApi.AutoMappers
 {
@@ -8,9 +9,9 @@ namespace S3Inovate.WebApi.AutoMappers
     {
         public MapperProfile()
         {
-            CreateMap<Reading, ReadingVm>();
-                //.ForMember(v => v.Timestamp,
-                //          e => e.MapFrom(v => v.Timestamp.Ticks));
+            CreateMap<Reading, ReadingVm>()
+                .ForMember(v => v.Timestamp,
+                          e => e.MapFrom(v => v.Timestamp.ToUtcTimestamp()));
 
             CreateMap<Building, BuildingVm>()
                .ForMember(v => v.Name,

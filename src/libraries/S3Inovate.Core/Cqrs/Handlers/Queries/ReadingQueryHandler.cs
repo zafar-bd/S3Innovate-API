@@ -26,7 +26,7 @@ namespace S3Inovate.Core.Cqrs.Handlers.Queries
 
         public async Task<IReadOnlyCollection<ReadingVm>> Handle(ReadingQuery args, CancellationToken cancellationToken)
         {
-            args.ToDate = args.ToDate.Value.ToEndOfTheDate();
+            args.ToDate = args.ToDate.ToEndOfTheDate();
 
             var cacheKey = $"reading-{args.BuildingId}-{args.ObjectId}-{args.DataFieldId}-{args.FromDate}-{args.ToDate}";
 
