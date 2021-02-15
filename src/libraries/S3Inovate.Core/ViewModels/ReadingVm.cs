@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace S3Inovate.Core.ViewModels
+﻿namespace S3Inovate.Core.ViewModels
 {
     public class ReadingVm
     {

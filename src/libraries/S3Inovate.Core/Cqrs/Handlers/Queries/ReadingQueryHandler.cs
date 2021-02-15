@@ -4,7 +4,6 @@ using S3Inovate.Core.Cqrs.Queries;
 using S3Inovate.Core.Helpers;
 using S3Inovate.Core.Servies.Abstractions;
 using S3Inovate.Core.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;

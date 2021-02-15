@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using S3Inovate.Core.Cqrs.Queries;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
