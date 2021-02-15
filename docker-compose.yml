@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+
+  s3inovate.webapi:
+    image: ${DOCKER_REGISTRY-}s3inovatewebapi
+    build:
+      context: .
+      dockerfile: src/apis/S3Inovate.WebApi/Dockerfile
+
+    #depends_on:
+        #- migrations
+        #- db
+  #db:
+    #image: mcr.microsoft.com/mssql/server:2019-latest
+    #environment:
+        #SA_PASSWORD: "Password@12345"
+        #ACCEPT_EULA: "Y"
+    #ports:
+        #- "14331:1433"
+    #depends_on:
+        #- migrations
+
+  #migrations:
+    #build:
+        #context: .
+        #dockerfile: Migrations.Dockerfile
